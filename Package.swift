@@ -10,8 +10,6 @@ let package = Package(name: "AndroidEntry", products: [
 ], targets: [
     .target(name: "AndroidEntry", dependencies: [
         .product(name: "NativeAppGlue", package: "native-app-glue"),
-    ], swiftSettings: [
-        .enableExperimentalFeature("Extern"),
     ]),
     .target(name: "AndroidEntryLegacy", dependencies: [
         .product(name: "NativeAppGlue", package: "native-app-glue"),
