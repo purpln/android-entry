@@ -1,4 +1,5 @@
 import NativeAppGlue
+import Android
 
 nonisolated(unsafe)
 private var _mainLooper: OpaquePointer? = nil
@@ -13,6 +14,8 @@ internal func configure(_ app: UnsafeMutablePointer<android_app>) {
     
     let callback: ALooper_callbackFunc = { fd, event, data in
         _dispatch_main_queue_callback_4CF(nil)
+        
+        usleep(1000)
         
         return 1
     }

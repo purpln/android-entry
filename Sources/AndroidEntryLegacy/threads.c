@@ -1,5 +1,6 @@
 #include <android_native_app_glue.h>
 #include <android/looper.h>
+#include <unistd.h>
 
 ALooper* _mainLooper;
 
@@ -8,6 +9,8 @@ extern int _dispatch_get_main_queue_port_4CF(void);
 
 int callback(int fd, int events, void* data) {
     _dispatch_main_queue_callback_4CF(NULL);
+    
+    usleep(1000);
     
     return 1;
 }
