@@ -10,9 +10,10 @@ extern int _dispatch_get_main_queue_port_4CF(void);
 int callback(int fd, int events, void* data) {
     _dispatch_main_queue_callback_4CF(NULL);
     
-    usleep(1000);
+    char buffer[8];
+    size_t length = read(fd, buffer, 8);
     
-    return 1;
+    return length != -1;
 }
 
 void android_app_configure(struct android_app* android_app) {

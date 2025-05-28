@@ -15,9 +15,12 @@ internal func configure(_ app: UnsafeMutablePointer<android_app>) {
     let callback: ALooper_callbackFunc = { fd, event, data in
         _dispatch_main_queue_callback_4CF(nil)
         
-        usleep(1000)
+        let capacity = 8
+        let length = withUnsafeTemporaryAllocation(of: UInt8.self, capacity: capacity, {
+            read(fd, $0.baseAddress, capacity)
+        })
         
-        return 1
+        return length != -1 ? 1 : 0
     }
     
     let port = _dispatch_get_main_queue_port_4CF()
