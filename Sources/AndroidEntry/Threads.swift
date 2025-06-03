@@ -1,5 +1,5 @@
-import NativeAppGlue
 import Android
+import NativeAppGlue
 
 nonisolated(unsafe)
 private var _mainLooper: OpaquePointer? = nil
@@ -12,12 +12,12 @@ internal func configure(_ app: UnsafeMutablePointer<android_app>) {
     _mainLooper = ALooper_forThread()
     ALooper_acquire(_mainLooper)
     
-    let callback: ALooper_callbackFunc = { fd, event, data in
+    let callback: ALooper_callbackFunc = { port, _, _ in
         _dispatch_main_queue_callback_4CF(nil)
         
         let capacity = 8
         let length = withUnsafeTemporaryAllocation(of: UInt8.self, capacity: capacity, {
-            read(fd, $0.baseAddress, capacity)
+            read(port, $0.baseAddress, capacity)
         })
         
         return length != -1 ? 1 : 0
@@ -31,4 +31,4 @@ internal func configure(_ app: UnsafeMutablePointer<android_app>) {
 private func _dispatch_main_queue_callback_4CF(_ msg: UnsafeMutableRawPointer?)
 
 @_silgen_name("_dispatch_get_main_queue_port_4CF")
-private func _dispatch_get_main_queue_port_4CF() -> Int32
+private func _dispatch_get_main_queue_port_4CF() -> CInt
